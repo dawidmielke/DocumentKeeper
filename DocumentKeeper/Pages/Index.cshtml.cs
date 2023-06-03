@@ -1,20 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Infrastructure.Repositories;
+using ApplicationCore.Models;
+using Infrastructure.Interfaces;
 
-namespace DocumentKeeper.Pages
+namespace Web.Pages.Documents
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IDocumentRepository _documentRepository;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IDocumentRepository documentRepository)
         {
-            _logger = logger;
+            _documentRepository = documentRepository;
         }
+
+        public IEnumerable<Document> Documents { get; set; }
 
         public void OnGet()
         {
-
+            Documents = _documentRepository.GetAllDocuments();
         }
     }
 }
